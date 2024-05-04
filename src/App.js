@@ -36,9 +36,9 @@ function App() {
     newTodos[todoIndex].completed=true;
     setTodos(newTodos);
     //ejercicio de mostrar un mensaje cuando se completen los todos
-    if (completedTodos == totalTodos){
-      console.log('todos completados');
-    }
+    // if (completedTodos == totalTodos){
+    //   console.log('todos completados');
+    // }
   };
 
   const borrarTodo = (text) => {
