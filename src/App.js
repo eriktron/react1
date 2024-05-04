@@ -14,15 +14,14 @@ const defaultTodos = [
 ];
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos);   //estado
+  const[todos, setTodos] = React.useState(defaultTodos);   //estado
   const[searchValue, setSearchValue] = React.useState('');  //estado
 
   const completedTodos = todos.filter(todos => !!todos.completed).length;       //estado derivados
-  const totalTodos = todos.length;           //estado derivados
+  const totalTodos = todos.length; 
 
   const searchedTodos = todos.filter(
     (todos) => {
-      //return todos.text.toLowerCase().includes(searchValue.toLocaleLowerCase());  una forma de hacerlo
       const todoText = todos.text.toLowerCase();
       const searchText = searchValue.toLowerCase();
       return todoText.includes(searchText);
@@ -36,6 +35,10 @@ function App() {
     );
     newTodos[todoIndex].completed=true;
     setTodos(newTodos);
+    //ejercicio de mostrar un mensaje cuando se completen los todos
+    if (completedTodos == totalTodos){
+      console.log('todos completados');
+    }
   };
 
   const borrarTodo = (text) => {
