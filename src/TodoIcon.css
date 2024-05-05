@@ -31,4 +31,13 @@
     width: 24px;
     height: 24px;
   }
+
+  .Icon-container-check:hover .Icon-svg{
+    fill:green;
+  }
+  .Icon-container-delete:hover .Icon-svg{
+    fill:red;
+  }
+
+
   
