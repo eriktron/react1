@@ -5,16 +5,41 @@ import { TodoList } from './TodoList';
 import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 
-const defaultTodos = [
-  { text: 'Cortar cebolla', completed: true },
-  { text: 'Tomar el Curso de Intro a React.js', completed: false },
-  { text: 'Llorar con la Llorona', completed: false },
-  { text: 'LALALALALA', completed: false },
-  { text: 'LOGRANDO TODOSEARCH', completed: true },
-];
+// const defaultTodos = [
+//   { text: 'Cortar cebolla', completed: true },
+//   { text: 'Tomar el Curso de Intro a React.js', completed: false },
+//   { text: 'Llorar con la Llorona', completed: false },
+//   { text: 'LALALALALA', completed: false },
+//   { text: 'LOGRANDO TODOSEARCH', completed: true },
+// ];
+
+// localStorage.setItem('TODOS_V1', defaultTodos);
+// localStorage.removeItem('TODOS_V1');
+function useLocalStorage(itemName, initialValue){
+   
+  const localStorageItem = localStorage.getItem('itemName');
+  let parsedItem;
+
+  if(!localStorageItem){
+    localStorage.setItem('TODOS_V1', JSON.stringify([]))
+    parsedItem = [];
+  }else{
+    parsedItem = JSON.parse(localStorageItem);
+  }
+
+  const [item, setItem] = React.useState();
+
+  const saveItem = (newItem) =>{
+    localStorage.setItem('TODOS_V1', JSON.stringify(newItem));
+    setItem(newItem);
+  };
+
+  return [item, saveItem];
+}
 
 function App() {
-  const[todos, setTodos] = React.useState(defaultTodos);   //estado
+
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', []); // dejamo de usar para usar el cusotm hook: const[todos, setTodos] = React.useState(parsedTodos);  //const[todos, setTodos] = React.useState(defaultTodos);   //estado
   const[searchValue, setSearchValue] = React.useState('');  //estado
 
   const completedTodos = todos.filter(todos => !!todos.completed).length;       //estado derivados
@@ -26,7 +51,7 @@ function App() {
       const searchText = searchValue.toLowerCase();
       return todoText.includes(searchText);
     }
-  );
+  ); 
 
   const completarTodo = (text) => {
     const newTodos = [...todos];
@@ -34,7 +59,7 @@ function App() {
       (todos) => todos.text == text 
     );
     newTodos[todoIndex].completed=true;
-    setTodos(newTodos);
+    saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);  aqui cambiando a guardarTodos
     //ejercicio de mostrar un mensaje cuando se completen los todos
     // if (completedTodos == totalTodos){
     //   console.log('todos completados');
@@ -47,7 +72,7 @@ function App() {
       (todos) => todos.text == text 
     );
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos);
+    saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);
   };
 
   return (
