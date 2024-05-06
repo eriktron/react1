@@ -1,9 +1,6 @@
 import React from 'react';
-import { TodoCounter } from './TodoCounter';
-import { TodoSearch } from './TodoSearch';
-import { TodoList } from './TodoList';
-import { TodoItem } from './TodoItem';
-import { CreateTodoButton } from './CreateTodoButton';
+import { AppUI } from './AppUI';
+import { useLocalStorage } from './userLocalStorage';
 
 // const defaultTodos = [
 //   { text: 'Cortar cebolla', completed: true },
@@ -13,36 +10,15 @@ import { CreateTodoButton } from './CreateTodoButton';
 //   { text: 'LOGRANDO TODOSEARCH', completed: true },
 // ];
 
-// localStorage.setItem('TODOS_V1', defaultTodos);
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 // localStorage.removeItem('TODOS_V1');
-function useLocalStorage(itemName, initialValue){
-   
-  const localStorageItem = localStorage.getItem('itemName');
-  let parsedItem;
-
-  if(!localStorageItem){
-    localStorage.setItem('TODOS_V1', JSON.stringify([]))
-    parsedItem = [];
-  }else{
-    parsedItem = JSON.parse(localStorageItem);
-  }
-
-  const [item, setItem] = React.useState();
-
-  const saveItem = (newItem) =>{
-    localStorage.setItem('TODOS_V1', JSON.stringify(newItem));
-    setItem(newItem);
-  };
-
-  return [item, saveItem];
-}
 
 function App() {
 
   const [todos, saveTodos] = useLocalStorage('TODOS_V1', []); // dejamo de usar para usar el cusotm hook: const[todos, setTodos] = React.useState(parsedTodos);  //const[todos, setTodos] = React.useState(defaultTodos);   //estado
   const[searchValue, setSearchValue] = React.useState('');  //estado
 
-  const completedTodos = todos.filter(todos => !!todos.completed).length;       //estado derivados
+  const completedTodos = todos.filter(todo => !!todo.completed).length;       //estado derivados
   const totalTodos = todos.length; 
 
   const searchedTodos = todos.filter(
@@ -56,7 +32,7 @@ function App() {
   const completarTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todos) => todos.text == text 
+      (todos) => todos.text === text 
     );
     newTodos[todoIndex].completed=true;
     saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);  aqui cambiando a guardarTodos
@@ -69,38 +45,24 @@ function App() {
   const borrarTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todos) => todos.text == text 
+      (todos) => todos.text === text 
     );
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);
   };
 
-  return (
-    <>
-      <TodoCounter 
-        completed={completedTodos}
-        total={totalTodos} 
-      />
-      <TodoSearch 
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-      />
-
-      <TodoList>
-        {searchedTodos.map(todo => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete = {() => completarTodo(todo.text)}
-            onDelete = {() => borrarTodo(todo.text)}
-          />
-        ))}
-      </TodoList>
-      
-      <CreateTodoButton />
-    </>
+  return(
+    <AppUI 
+    completedTodos={completedTodos}
+    totalTodos={totalTodos}
+    searchValue={searchValue}
+    setSearchValue={setSearchValue}
+    searchedTodos={searchedTodos}
+    completarTodo={completarTodo}
+    borrarTodo={borrarTodo}
+    />
   );
+  
 }
 
 export default App;
