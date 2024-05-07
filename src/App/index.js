@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppUI } from './AppUI';
-import { useLocalStorage } from './userLocalStorage';
+import { useLocalStorage } from './useLocalStorage';
 
 // const defaultTodos = [
 //   { text: 'Cortar cebolla', completed: true },
@@ -19,7 +19,7 @@ function App() {
   const[searchValue, setSearchValue] = React.useState('');  //estado
 
   const completedTodos = todos.filter(todo => !!todo.completed).length;       //estado derivados
-  const totalTodos = todos.length; 
+  const totalTodos = todos.length;
 
   const searchedTodos = todos.filter(
     (todos) => {
@@ -32,20 +32,17 @@ function App() {
   const completarTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todos) => todos.text === text 
+      (todo) => todo.text === text 
     );
     newTodos[todoIndex].completed=true;
     saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);  aqui cambiando a guardarTodos
-    //ejercicio de mostrar un mensaje cuando se completen los todos
-    // if (completedTodos == totalTodos){
-    //   console.log('todos completados');
-    // }
+
   };
 
   const borrarTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
-      (todos) => todos.text === text 
+      (todo) => todo.text === text 
     );
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos); //guardarTodos(newTodos); //setTodos(newTodos);
