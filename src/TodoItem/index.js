@@ -17,10 +17,8 @@ function TodoItem(props) {
         V      
       </span> */}
       
-      <p 
-        className={`TodoItem-p ${props.completed && "TodoItem-p--complete"}`}
-      >
-        {props.text}
+      <p className={`TodoItem-p ${props.completed && "TodoItem-p--complete"}`}>
+         {props.text}
       </p>
       <DeleteIcon
         onDelete={props.onDelete}
