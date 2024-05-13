@@ -4,6 +4,7 @@ import { TodoSearch } from '../TodoSearch';
 import { TodoList } from '../TodoList';
 import { TodoItem } from '../TodoItem';
 import { CreateTodoButton } from '../CreateTodoButton';
+import { TodoForm } from '../TodoForm';
 import { Modal } from '../Modal';
 import { TodoContext } from '../TodoContext';
 
@@ -62,7 +63,7 @@ function AppUI(
 
           {openModal && (
               <Modal>
-                  La funcionalidad de agregar Todo
+                  <TodoForm />
               </Modal>
           )}
         
