@@ -11,7 +11,7 @@ function TodoProvider( {children} ){
         error,
       } = useLocalStorage('TODOS_V2', []); // dejamo de usar para usar el cusotm hook: const[todos, setTodos] = React.useState(parsedTodos);  //const[todos, setTodos] = React.useState(defaultTodos);   //estado
       const[searchValue, setSearchValue] = React.useState('');  //estado
-      const[openModal, setOpenModal] = React.useState(true); //el estado por defecto es false
+      const[openModal, setOpenModal] = React.useState(false); //el estado por defecto es false
       //const completedTodos = todos.filter(todo => !!todo.completed).length;       //estado derivados con error
       const completedTodos = todos.filter(todos => !!todos.completed).length;   //el mismo estado derivado corregido
       const totalTodos = todos.length;
