@@ -17,7 +17,7 @@ function TodoCounter() {
   return (
     <h1 className="TodoCounter">
       {/* Has completado <span>{completed}</span> de <span>{total}</span> TODOs */}
-      Has completado <span>{completedTodos}</span> de <span>{totalTodos}</span> TODOs    
+      Completaste <span>{completedTodos}</span> de <span>{totalTodos}</span> Tareas    
     </h1>
   );
 }
